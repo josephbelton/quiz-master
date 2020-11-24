@@ -1,24 +1,31 @@
-const express = require('express')
-const mysql = require('mysql')
-const app = express()
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
+import routes from './src/routes/routes'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+
 const port = 4000
+const app = express()
 
-const config = require('./config')
+//mongoose
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/quiz', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
-const connection = mysql.createConnection(config)
+//bodyparser
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-connection.connect()
 
 app.use(cors());
 
 app.get('/', (req, res) => {
-    connection.query('SELECT * FROM quiz.users', (err, rows) => {
-        if (err) throw err;
-
-        res.send(rows)
-    })
+    res.send('welcome')
 })
+
+routes(app)
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
