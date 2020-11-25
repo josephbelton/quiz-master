@@ -1,24 +1,55 @@
-const express = require('express')
-const mysql = require('mysql')
-const app = express()
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
+import routes from './src/routes/routes'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+
 const port = 4000
+const app = express()
 
-const config = require('./config')
+//mongoose
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/quiz', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
-const connection = mysql.createConnection(config)
+//bodyparser
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-connection.connect()
+app.use(cookieParser())
 
-app.use(cors());
+app.use(session({
+    secret: 'secret',
+    cookie: {
+        maxAge: 600000,
+        secure: false
+    },
+    saveUninitialized: false,
+    resave: false,
+    unset: 'destroy'
+}))
+
+app.use(cors({
+    origin: [
+        'http://localhost:3000'
+    ],
+    credentials: true,
+    exposedHeaders: ['set-cookie']
+}));
 
 app.get('/', (req, res) => {
-    connection.query('SELECT * FROM quiz.users', (err, rows) => {
-        if (err) throw err;
-
-        res.send(rows)
-    })
+    if (req.session.userDetails) {
+        res.send(req.session.userDetails)
+    } else {
+        res.send('Nobodys Logged In')
+    }
 })
+
+routes(app)
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
