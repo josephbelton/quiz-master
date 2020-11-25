@@ -50,7 +50,7 @@ const App = () => {
       <p>{message}</p>
       <Router>
         <Dashboard path="/" user={user} handleLogout={handleLogout} />
-        <Login path="login" handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
+        <Login path="login" user={user} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
       </Router>
     </main>
   );

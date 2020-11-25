@@ -1,6 +1,8 @@
 import React from 'react'
+import { Redirect } from '@reach/router';
 
-const Login = ({ handleUsernameChange, handlePasswordChange, handleSubmit }) => {
+const Login = ({ handleUsernameChange, handlePasswordChange, handleSubmit, user }) => {
+    if (user.username) { return <Redirect noThrow={true} to="/" /> }
 
     return (
         <div>
