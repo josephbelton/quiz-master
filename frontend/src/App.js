@@ -3,12 +3,16 @@ import axios from 'axios'
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
+import { Router, useNavigate } from '@reach/router';
+
 const App = () => {
   const [message, setMessage] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const [user, setUser] = useState({})
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get('http://localhost:4000/', { withCredentials: true }).then(response => {
@@ -28,6 +32,7 @@ const App = () => {
     e.preventDefault();
     axios.post('http://localhost:4000/login', { username: username, password: password }, { withCredentials: true }).then(response => {
       setUser(response.data)
+      navigate('/')
     })
   }
 
@@ -36,19 +41,17 @@ const App = () => {
     axios.delete('http://localhost:4000/logout', { withCredentials: true }).then(response => {
       setUser({})
       setMessage(response.data)
+      navigate('/login')
     })
   }
 
   return (
     <main>
       <p>{message}</p>
-      {user.username
-        ? (
-          <Dashboard user={user} handleLogout={handleLogout} />
-        )
-        : (
-          <Login handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
-        )}
+      <Router>
+        <Dashboard path="/" user={user} handleLogout={handleLogout} />
+        <Login path="login" handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
+      </Router>
     </main>
   );
 }
