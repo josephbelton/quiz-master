@@ -37,9 +37,22 @@ export const login = (req, res) => {
         if (err) res.send(err)
         bcrypt.compare(req.body.password, user.password, (err, result) => {
             if (!result) return res.send(err);
+            req.session.userDetails = user;
             return res.json(user)
         })
     })
+}
+
+export const logout = (req, res) => {
+    if (req.session) {
+        req.session.destroy(err => {
+            if (err) return res.status(400).send('Unable To Logout')
+            res.send('Logout Success')
+        })
+    } else {
+        res.end()
+    }
+
 }
 
 

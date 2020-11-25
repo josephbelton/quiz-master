@@ -1,4 +1,4 @@
-import { addNewUser, getUsers, getUserWithId, login } from '../controllers/controller'
+import { addNewUser, getUsers, getUserWithId, login, logout } from '../controllers/controller'
 
 const routes = (app) => {
     app.route('/users')
@@ -11,6 +11,9 @@ const routes = (app) => {
 
     app.route('/login')
         .post(login);
+
+    app.route('/logout')
+        .delete(logout)
 }
 
 export default routes
