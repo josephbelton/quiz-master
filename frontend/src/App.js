@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -13,6 +15,14 @@ const App = () => {
       setUser(response.data)
     })
   }, [])
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,26 +40,16 @@ const App = () => {
   }
 
   return (
-    <div>
-      <header >
-        <p>{message}</p>
-        {user.username
-          ? (
-            <>
-              <p>hi {user.username}</p>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          )
-          : (
-            <form onSubmit={handleSubmit} autoComplete="off">
-              <input type="text" onChange={(e) => setUsername(e.target.value)} />
-              <input type="password" onChange={(e) => setPassword(e.target.value)} />
-              <button>submit</button>
-            </form>
-          )}
-
-      </header>
-    </div>
+    <main>
+      <p>{message}</p>
+      {user.username
+        ? (
+          <Dashboard user={user} handleLogout={handleLogout} />
+        )
+        : (
+          <Login handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
+        )}
+    </main>
   );
 }
 
