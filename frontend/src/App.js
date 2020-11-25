@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Login from './pages/login/Login';
+import Dashboard from './pages/dashboard/Dashboard';
+
+import { Router, useNavigate } from '@reach/router';
 
 const App = () => {
   const [message, setMessage] = useState('');
@@ -8,16 +12,27 @@ const App = () => {
 
   const [user, setUser] = useState({})
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     axios.get('http://localhost:4000/', { withCredentials: true }).then(response => {
       setUser(response.data)
     })
   }, [])
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:4000/login', { username: username, password: password }, { withCredentials: true }).then(response => {
       setUser(response.data)
+      navigate('/')
     })
   }
 
@@ -26,30 +41,18 @@ const App = () => {
     axios.delete('http://localhost:4000/logout', { withCredentials: true }).then(response => {
       setUser({})
       setMessage(response.data)
+      navigate('/login')
     })
   }
 
   return (
-    <div>
-      <header >
-        <p>{message}</p>
-        {user.username
-          ? (
-            <>
-              <p>hi {user.username}</p>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          )
-          : (
-            <form onSubmit={handleSubmit} autoComplete="off">
-              <input type="text" onChange={(e) => setUsername(e.target.value)} />
-              <input type="password" onChange={(e) => setPassword(e.target.value)} />
-              <button>submit</button>
-            </form>
-          )}
-
-      </header>
-    </div>
+    <main>
+      <p>{message}</p>
+      <Router>
+        <Dashboard path="/" user={user} handleLogout={handleLogout} />
+        <Login path="login" user={user} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
+      </Router>
+    </main>
   );
 }
 
