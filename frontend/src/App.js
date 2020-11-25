@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import Login from './pages/login/Login';
+import Dashboard from './pages/dashboard/Dashboard';
 
 import { Router, useNavigate } from '@reach/router';
 
