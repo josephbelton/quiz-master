@@ -13,7 +13,7 @@ const Login = ({ handleUsernameChange, handlePasswordChange, handleSubmit, user 
                         <div style={{ display: 'flex', flexDirection: 'column', margin: '3rem' }}>
                             <Input type="text" onChange={handleUsernameChange} placeholder="username" />
                             <Input type="password" onChange={handlePasswordChange} placeholder="password" />
-                            <Button>Login</Button>
+                            <Button type="submit">Login</Button>
                         </div>
                     </form>
                 </Paper>
