@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
-import { UserSchema } from '../models/models';
+import { UserSchema, QuizSchema, QuestionSchema, AnswerSchema } from '../models/models';
 import bcrypt from 'bcryptjs'
 
 const User = mongoose.model('User', UserSchema)
+const Quiz = mongoose.model('Quiz', QuizSchema)
+const Question = mongoose.model('Question', QuestionSchema)
+const Answer = mongoose.model('Answer', AnswerSchema)
 
+// USERS
 export const addNewUser = (req, res) => {
     const { password } = req.body;
     bcrypt.hash(password, 10, (err, hash) => {
@@ -52,7 +56,30 @@ export const logout = (req, res) => {
     } else {
         res.end()
     }
-
 }
 
+// Quizzes
+export const getQuizzes = (req, res) => {
+    Quiz.find({}, (err, quiz) => {
+        if (err) res.send(err)
+        res.json(quiz)
+    })
+}
 
+export const addNewQuiz = async (req, res) => {
+    console.log(req.body)
+    const newQuiz = new Quiz(req.body)
+
+    newQuiz.save((err, quiz) => {
+        if (err) res.send(err)
+        res.json(quiz)
+    })
+}
+
+export const getQuizByName = (req, res) => {
+    const { name } = req.body;
+    Quiz.findOne({ name: name }, (err, quiz) => {
+        if (err) res.send(err)
+        res.json(quiz)
+    })
+}

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Login from './pages/login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
+import Create from './pages/create/Create';
+import Quiz from './pages/quiz/Quiz';
 
 import { Router, useNavigate } from '@reach/router';
 
@@ -49,7 +51,9 @@ const App = () => {
     <main>
       <p>{message}</p>
       <Router>
+        <Quiz path="quiz/:name" user={user} />
         <Dashboard path="/" user={user} handleLogout={handleLogout} />
+        <Create path="/create" user={user} />
         <Login path="login" user={user} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
       </Router>
     </main>

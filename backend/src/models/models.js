@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-export const UserSchema = new Schema({
+const UserSchema = new Schema({
     username: {
         type: String,
         required: 'Enter a Username'
@@ -16,3 +16,24 @@ export const UserSchema = new Schema({
         default: 'restricted'
     }
 })
+
+const AnswerSchema = new Schema({
+    title: String
+})
+
+const QuestionSchema = new Schema({
+    title: String,
+    correct_answer: Number,
+})
+
+QuestionSchema.add({ answers: [AnswerSchema] })
+
+const QuizSchema = new Schema({
+    name: String,
+})
+
+QuizSchema.add({ questions: [QuestionSchema] })
+
+module.exports = {
+    UserSchema, QuizSchema, QuestionSchema, AnswerSchema
+}
