@@ -1,0 +1,7 @@
+.create-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 95vh;
+    padding-top: 3rem;
+}

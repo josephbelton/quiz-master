@@ -3,10 +3,13 @@ import axios from 'axios'
 import times from 'lodash.times'
 import Question from './components/Question'
 import { Link, Redirect } from '@reach/router';
+import { AppBar, Button, Paper, Input } from '@material-ui/core';
+import './create.css';
 
 const Create = ({ user }) => {
     const [numberOfQuestions, setNumberOfQuestions] = useState(0)
     const [formData, updateFormData] = useState({})
+    const [message, setMessage] = useState('')
 
     if (!user.username) { return <Redirect noThrow={true} to="/login" /> }
 
@@ -48,30 +51,42 @@ const Create = ({ user }) => {
             object.questions.push(question);
         });
 
-        console.log(object)
-
         axios.post('http://localhost:4000/quiz', { ...object }, { withCredentials: true }, { headers: headers }).then((response) => {
             console.log(response.data)
-            return <Redirect noThrow={true} to="/" />
+            setMessage('Quiz Successfully Submitted')
         })
 
     }
 
     return (
         <div>
-            <Link to="/">Home</Link>
-            {user.role !== "edit" ? <p>You need to be an editor to create quizzes</p> : (
-                <form id="create" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-                    <input type="text" name="quiz-name" placeholder="quiz name" onChange={handleChange} />
-                    <input type="number" onChange={(e) => setNumberOfQuestions(e.target.value)} name="amount-questions" placeholder="number of questions" />
-                    {times(numberOfQuestions, (n) => {
-                        return (
-                            <Question questionNumber={n + 1} handleChange={handleChange} />
-                        )
-                    })}
-                    <button onClick={handleSubmit}>Submit</button>
-                </form>
-            )}
+            <AppBar position="static">
+                <div className="menu-container">
+                    <h3>WebbiSkools LTD Quiz Master</h3>
+                    <Link to={`/`}><Button color="white" variant="contained">Back To Dashboard</Button></Link>
+                </div>
+            </AppBar>
+            <div className="create-page-container" style={{ backgroundColor: 'dodgerblue' }}>
+                {message && <p>{message}</p>}
+                {user.role !== "edit" ? <p>You need to be an editor to create quizzes</p> : (
+                    <Paper elevation={3} >
+                        <form id="create" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
+                            <div style={{ display: 'flex', flexDirection: 'column', margin: '3rem' }}>
+
+                                <Input type="text" name="quiz-name" placeholder="quiz name" onChange={handleChange} />
+                                <Input type="number" onChange={(e) => setNumberOfQuestions(e.target.value)} name="amount-questions" placeholder="number of questions" />
+                                {times(numberOfQuestions, (n) => {
+                                    return (
+                                        <Question questionNumber={n + 1} handleChange={handleChange} />
+                                    )
+                                })}
+                                <Button onClick={handleSubmit}>Submit</Button>
+                            </div>
+                        </form>
+                    </Paper>
+
+                )}
+            </div>
         </div>
     )
 }
