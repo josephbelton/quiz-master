@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Login from './pages/login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
+import Create from './pages/create/Create';
 
 import { Router, useNavigate } from '@reach/router';
 
@@ -50,6 +51,7 @@ const App = () => {
       <p>{message}</p>
       <Router>
         <Dashboard path="/" user={user} handleLogout={handleLogout} />
+        <Create path="/create" user={user} />
         <Login path="login" user={user} handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} handleSubmit={handleSubmit} />
       </Router>
     </main>
