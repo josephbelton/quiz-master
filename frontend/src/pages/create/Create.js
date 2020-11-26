@@ -52,7 +52,6 @@ const Create = ({ user }) => {
         });
 
         axios.post('http://localhost:4000/quiz', { ...object }, { withCredentials: true }, { headers: headers }).then((response) => {
-            console.log(response.data)
             setMessage('Quiz Successfully Submitted')
         })
 
