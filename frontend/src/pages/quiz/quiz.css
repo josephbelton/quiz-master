@@ -1,0 +1,33 @@
+.quiz-menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    min-width: 5vh;
+}
+
+.quiz-page-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    min-height: 95vh;
+}
+
+.quiz-quiz-container {
+    background-color: white;
+    padding: 5rem;
+    border-radius: 1em;
+} 
+.answer {
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+    background-color: lightgray;
+    border-radius: 1em;
+}
+.correct-answer {
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+    background-color: lightgreen;
+    border-radius: 1em;
+}
