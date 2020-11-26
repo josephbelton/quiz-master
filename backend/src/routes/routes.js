@@ -21,7 +21,7 @@ const routes = (app) => {
         .post(addNewQuiz);
 
     app.route('/quizByName')
-        .get(getQuizByName);
+        .post(getQuizByName);
 }
 
 export default routes

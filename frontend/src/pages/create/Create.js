@@ -50,22 +50,28 @@ const Create = ({ user }) => {
 
         console.log(object)
 
-        axios.post('http://localhost:4000/quiz', { ...object }, { withCredentials: true }, { headers: headers }).then((response) => console.log(response.data))
+        axios.post('http://localhost:4000/quiz', { ...object }, { withCredentials: true }, { headers: headers }).then((response) => {
+            console.log(response.data)
+            return <Redirect noThrow={true} to="/" />
+        })
+
     }
 
     return (
         <div>
             <Link to="/">Home</Link>
-            <form id="create" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-                <input type="text" name="quiz-name" placeholder="quiz name" onChange={handleChange} />
-                <input type="number" onChange={(e) => setNumberOfQuestions(e.target.value)} name="amount-questions" placeholder="number of questions" />
-                {times(numberOfQuestions, (n) => {
-                    return (
-                        <Question questionNumber={n + 1} handleChange={handleChange} />
-                    )
-                })}
-                <button onClick={handleSubmit}>Submit</button>
-            </form>
+            {user.role !== "edit" ? <p>You need to be an editor to create quizzes</p> : (
+                <form id="create" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
+                    <input type="text" name="quiz-name" placeholder="quiz name" onChange={handleChange} />
+                    <input type="number" onChange={(e) => setNumberOfQuestions(e.target.value)} name="amount-questions" placeholder="number of questions" />
+                    {times(numberOfQuestions, (n) => {
+                        return (
+                            <Question questionNumber={n + 1} handleChange={handleChange} />
+                        )
+                    })}
+                    <button onClick={handleSubmit}>Submit</button>
+                </form>
+            )}
         </div>
     )
 }
