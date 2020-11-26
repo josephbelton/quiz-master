@@ -67,7 +67,6 @@ export const getQuizzes = (req, res) => {
 }
 
 export const addNewQuiz = async (req, res) => {
-    console.log(req.body)
     const newQuiz = new Quiz(req.body)
 
     newQuiz.save((err, quiz) => {

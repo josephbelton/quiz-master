@@ -7,8 +7,9 @@ import Quiz from './pages/quiz/Quiz';
 
 import { Router, useNavigate } from '@reach/router';
 
+import './index.css';
+
 const App = () => {
-  const [message, setMessage] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,14 +43,12 @@ const App = () => {
     e.preventDefault();
     axios.delete('http://localhost:4000/logout', { withCredentials: true }).then(response => {
       setUser({})
-      setMessage(response.data)
       navigate('/login')
     })
   }
 
   return (
     <main>
-      <p>{message}</p>
       <Router>
         <Quiz path="quiz/:name" user={user} />
         <Dashboard path="/" user={user} handleLogout={handleLogout} />
