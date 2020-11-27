@@ -1,6 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 require("chromedriver");
-const script = require('jest');
 const { expect } = require('@jest/globals');
 
 describe('Test that user priviledges are working effectively', () => {
@@ -21,14 +20,14 @@ describe('Test that user priviledges are working effectively', () => {
         const usernameField = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/div/div/form/div/div[1]/input'));
         const passwordField = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/div/div/form/div/div[2]/input'));
 
-        await usernameField.sendKeys('barry');
+        await usernameField.sendKeys('jason');
         await passwordField.sendKeys('password', Key.ENTER);
 
         await driver.sleep(2000);
 
         const message = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/div/h2')).getAttribute('innerHTML');
 
-        expect(message).toBe('Welcome barry you have been given edit privelidges')
+        expect(message).toBe('Welcome jason you have been given restrict privelidges')
 
         const signOutButton = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/header/div/button'));
         await signOutButton.click();
@@ -72,7 +71,7 @@ describe('Test that user priviledges are working effectively', () => {
         const usernameField = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/div/div/form/div/div[1]/input'));
         const passwordField = await driver.findElement(By.xpath('//*[@id="root"]/main/div/div/div/div/form/div/div[2]/input'));
 
-        await usernameField.sendKeys('barry');
+        await usernameField.sendKeys('brett');
         await passwordField.sendKeys('password', Key.ENTER);
 
         await driver.sleep(2000);
