@@ -36,6 +36,13 @@ export const getUserWithId = (req, res) => {
     })
 }
 
+export const deleteUsers = (req, res) => {
+    User.deleteMany({}, (err) => {
+        if (err) res.send(err)
+        res.end();
+    })
+}
+
 export const login = (req, res) => {
     User.findOne({ username: req.body.username }, (err, user) => {
         if (err) res.send(err)
@@ -63,6 +70,13 @@ export const getQuizzes = (req, res) => {
     Quiz.find({}, (err, quiz) => {
         if (err) res.send(err)
         res.json(quiz)
+    })
+}
+
+export const deleteQuizzes = (req, res) => {
+    Quiz.deleteMany({}, (err) => {
+        if (err) res.send(err)
+        res.end();
     })
 }
 
