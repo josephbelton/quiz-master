@@ -10,17 +10,19 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
+    "chromedriver": "^87.0.0",
     "lodash.times": "^4.3.2",
     "material-ui-number-input": "^5.0.24",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cd ../backend/ && node ./seed/usersSeed.js && node ./seed/quizSeed.js && cd ../frontend/ && jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
