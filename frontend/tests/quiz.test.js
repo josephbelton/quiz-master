@@ -43,7 +43,7 @@ describe('Test that quizzes can be created / viewed and be checked for answers e
 
         await question1Field.sendKeys('What year was JavaScript created?');
         await howManyAnswers1Field.sendKeys('2');
-        await correctAnswer1Field.sendKeys('1');
+        await correctAnswer1Field.sendKeys('2');
 
         const answer1Question1 = await driver.findElement(By.xpath('//*[@id="create"]/div/div[3]/div[4]/div/input'));
         const answer2Question1 = await driver.findElement(By.xpath('//*[@id="create"]/div/div[3]/div[5]/div/input'));
@@ -57,7 +57,7 @@ describe('Test that quizzes can be created / viewed and be checked for answers e
 
         await question2Field.sendKeys('Who created Javascript?');
         await howManyAnswers2Field.sendKeys('2');
-        await correctAnswer2Field.sendKeys('2');
+        await correctAnswer2Field.sendKeys('1');
 
         const answer1Question2 = await driver.findElement(By.xpath('//*[@id="create"]/div/div[4]/div[4]/div/input'));
         const answer2Question2 = await driver.findElement(By.xpath('//*[@id="create"]/div/div[4]/div[5]/div/input'));
